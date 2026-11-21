@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Tasks{% endblock %}
+
+{% block content %}
+    <header class="page-header">
+        <div>
+            <h1>Tasks</h1>
+            <p class="muted">Keep track of what needs to get done.</p>
+        </div>
+        <a class="button" href="{% url 'task_create' %}">Add task</a>
+    </header>
+
+    {% if tasks %}
+        <ul class="task-list">
+            {% for task in tasks %}
+                <li class="task-card">
+                    <div class="task-copy">
+                        <h2><a href="{% url 'task_detail' task.pk %}">{{ task.title }}</a></h2>
+                        <p>{{ task.description }}</p>
+                        <span class="status {% if task.completed %}complete{% else %}pending{% endif %}">
+                            {% if task.completed %}Completed{% else %}Not completed{% endif %}
+                        </span>
+                    </div>
+                    <div class="task-actions">
+                        <a href="{% url 'task_update' task.pk %}">Edit</a>
+                        <a href="{% url 'task_delete' task.pk %}">Delete</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <section class="empty-state">
+            <h2>No tasks yet</h2>
+            <p>Create a task to get started.</p>
+            <a class="button" href="{% url 'task_create' %}">Create your first task</a>
+        </section>
+    {% endif %}
+{% endblock %}

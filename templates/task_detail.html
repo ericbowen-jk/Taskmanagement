@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}{{ task.title }}{% endblock %}
+
+{% block content %}
+    <header class="page-header">
+        <div>
+            <h1>{{ task.title }}</h1>
+            <p class="muted">
+                {% if task.completed %}Completed{% else %}Not completed{% endif %}
+            </p>
+        </div>
+    </header>
+
+    <section class="panel">
+        <p>{{ task.description|default:"No description provided." }}</p>
+        <div class="form-actions">
+            <a class="button" href="{% url 'task_update' task.pk %}">Edit task</a>
+            <a href="{% url 'task_delete' task.pk %}">Delete</a>
+            <a href="{% url 'home' %}">Back to tasks</a>
+        </div>
+    </section>
+{% endblock %}
